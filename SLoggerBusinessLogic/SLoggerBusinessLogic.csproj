@@ -9,5 +9,7 @@
     <ItemGroup>
       <PackageReference Include="NLog" Version="4.7.15" />
     </ItemGroup>
-
+    <ItemGroup>
+        <Content Update="nlog.config" CopyToOutputDirectory="PreserveNewest" />
+    </ItemGroup>
 </Project>
