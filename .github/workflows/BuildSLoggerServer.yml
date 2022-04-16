@@ -1,4 +1,4 @@
-name: Build SLogger Server 
+name: Build_SLogger_Server 
 
 on:
   push:
