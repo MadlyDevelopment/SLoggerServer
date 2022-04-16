@@ -12,4 +12,15 @@
       <ProjectReference Include="..\SLoggerBusinessLogic\SLoggerBusinessLogic.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="NLog" Version="4.7.15" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="nlog.config" />
+      <Content Include="nlog.config">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+    </ItemGroup>
+
 </Project>

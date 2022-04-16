@@ -26,21 +26,17 @@ public class AsynchronousSocketListener
             listener.Listen(100);
             while (true)
             {
-                allDone.Reset();  
-  
-                // Start an asynchronous socket to listen for connections.  
-                Console.WriteLine("Waiting for a connection...");  
+                allDone.Reset();
+                _logger.Info("Waiting for a connection...");  
                 listener.BeginAccept(
                     new AsyncCallback(AcceptCallback),  
-                    listener );  
-  
-                // Wait until a connection is made before continuing.  
+                    listener );
                 allDone.WaitOne(); 
             }
         }
         catch (Exception e)
         {
-            _logger.Error($"The Server could not start lisiting on port {_port}",e);
+            _logger.Error($"The Server could not start lisiting on port {_port}", e);
         }
     }
     public static void AcceptCallback(IAsyncResult ar)
@@ -50,9 +46,7 @@ public class AsynchronousSocketListener
   
         // Get the socket that handles the client request.  
         var listener = (Socket) ar.AsyncState!;  
-        var handler = listener?.EndAccept(ar);  
-  
-        // Create the state object.  
+        var handler = listener?.EndAccept(ar);
         var state = new StateObject
         {
             WorkSocket = handler
@@ -73,18 +67,20 @@ public class AsynchronousSocketListener
         // Read data from the client socket.
         if (handler != null)
         {
-            var bytesRead = handler.EndReceive(ar);  
-  
-            if (bytesRead > 0) {
-                state.Sb.Append(Encoding.ASCII.GetString(  
+            var bytesRead = handler.EndReceive(ar);
+            if (bytesRead > 0) 
+            {
+                state.Sb.Append(Encoding.UTF8.GetString(  
                     state.Buffer, 0, bytesRead));
                 content = state.Sb.ToString();  
-                if (content.IndexOf("<EOF>") > -1) {
-                    Console.WriteLine("Read {0} bytes from socket. \n Data : {1}",  
-                        content.Length, content );  
-                    // Echo the data back to the client.  
+                if (content.IndexOf("<EOF>") > -1) 
+                {
+                    _logger.Debug($"Read {content.Length} bytes from socket.");
+                    _logger.Debug($"The following data was retrieved {content}");
                     Send(handler, content);  
-                } else {
+                } 
+                else 
+                {
                     handler.BeginReceive(state.Buffer, 0, StateObject.BufferSize, 0,  
                         new AsyncCallback(ReadCallback), state);  
                 }  
@@ -94,8 +90,8 @@ public class AsynchronousSocketListener
     
     private static void Send(Socket handler, String data)
     {
-        // Convert the string data to byte data using ASCII encoding.  
-        var byteData = Encoding.ASCII.GetBytes(data);  
+        // Convert the string data to byte data using UTF8 encoding.  
+        var byteData = Encoding.UTF8.GetBytes(data);  
   
         // Begin sending the data to the remote device.  
         handler.BeginSend(byteData, 0, byteData.Length, 0,  
@@ -114,7 +110,7 @@ public class AsynchronousSocketListener
         }
         catch (Exception e)
         {
-            Console.WriteLine(e.ToString());  
+            _logger.Error("The message could not be send to the agent", e);  
         }  
     }
     
