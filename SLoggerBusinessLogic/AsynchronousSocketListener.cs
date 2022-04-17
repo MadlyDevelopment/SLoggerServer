@@ -19,6 +19,7 @@ public class AsynchronousSocketListener
         var ipHostInfo = Dns.GetHostEntry(Dns.GetHostName());
         var ipAdress = ipHostInfo.AddressList[0];
         var localEndPoint = new IPEndPoint(ipAdress, _port);
+        _logger.Info($"The SLogger Server listen on {ipAdress}:{_port}");
         var listener = new Socket(ipAdress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
         try
         {
