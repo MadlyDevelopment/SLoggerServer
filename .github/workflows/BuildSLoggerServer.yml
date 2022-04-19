@@ -24,15 +24,15 @@ jobs:
     - uses: actions/upload-artifact@v3
       with: 
           name: SLoggerCommand
-          path: SLoggerServer/SLoggerCommand
+          path: /home/runner/work/SLoggerServer/SLoggerServer/SLoggerCommand
     - uses: actions/upload-artifact@v3
       with: 
           name: SLoggerUnitTests
-          path: SLoggerServer/SLoggerUnitTests
+          path: /home/runner/work/SLoggerServer/SLoggerServer/SLoggerUnitTests
     - uses: actions/upload-artifact@v3
       with: 
           name: SLoggerBusinessLogic
-          path: SLoggerServer/SLoggerBusinessLogic
+          path: /home/runner/work/SLoggerServer/SLoggerServer/SLoggerBusinessLogic
   
   test:
     needs: [build]
