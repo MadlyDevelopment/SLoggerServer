@@ -30,7 +30,7 @@ public class AsynchronousSocketListener
                 allDone.Reset();
                 _logger.Info("Waiting for a connection...");  
                 listener.BeginAccept(
-                    new AsyncCallback(AcceptCallback),  
+                    data => AcceptCallback(data),  
                     listener );
                 allDone.WaitOne(); 
             }
@@ -43,8 +43,7 @@ public class AsynchronousSocketListener
     public static void AcceptCallback(IAsyncResult ar)
     {
         // Signal the main thread to continue.  
-        allDone.Set();  
-  
+        allDone.Set();
         // Get the socket that handles the client request.  
         var listener = (Socket) ar.AsyncState!;  
         var handler = listener?.EndAccept(ar);
@@ -53,12 +52,12 @@ public class AsynchronousSocketListener
             WorkSocket = handler
         };
         handler?.BeginReceive( state.Buffer, 0, StateObject.BufferSize, 0,  
-            new AsyncCallback(ReadCallback), state);  
+            new AsyncCallback(data => ReadCallback(data)), state);  
     }
     
     public static void ReadCallback(IAsyncResult ar)
     {
-        var content = string.Empty;  
+        string content;  
   
         // Retrieve the state object and the handler socket  
         // from the asynchronous state object.  
@@ -73,23 +72,15 @@ public class AsynchronousSocketListener
             {
                 state.Sb.Append(Encoding.UTF8.GetString(  
                     state.Buffer, 0, bytesRead));
-                content = state.Sb.ToString();  
-                if (content.IndexOf("<EOF>") > -1) 
-                {
-                    _logger.Debug($"Read {content.Length} bytes from socket.");
-                    _logger.Debug($"The following data was retrieved {content}");
-                    Send(handler, content);  
-                } 
-                else 
-                {
-                    handler.BeginReceive(state.Buffer, 0, StateObject.BufferSize, 0,  
-                        new AsyncCallback(ReadCallback), state);  
-                }  
-            }
+                content = state.Sb.ToString();
+                _logger.Debug($"Read {content.Length} bytes from socket.");
+                _logger.Debug($"The following data was retrieved {content}");
+                Send(handler, content);
+            }  
         }
     }
     
-    private static void Send(Socket handler, String data)
+    private static void Send(Socket handler, string data)
     {
         // Convert the string data to byte data using UTF8 encoding.  
         var byteData = Encoding.UTF8.GetBytes(data);  
