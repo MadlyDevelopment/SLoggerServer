@@ -48,7 +48,7 @@ jobs:
       with:
         name: SLoggerBusinessLogic
     - name: Run Unit Tests
-      run: dotnet test SLoggerUnitTests --verbosity normal
+      run: dotnet test SLoggerUnitTests/SLoggerUnitTests.csproj --verbosity normal
     - uses: actions/upload-artifact@v3
       with: 
           name: SLoggerCommand
