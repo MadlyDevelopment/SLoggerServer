@@ -1,9 +1,7 @@
-using System.Net;
-using System.Net.Sockets;
 using NLog;
 using NLog.Web;
 
-namespace SLoggerBusinessLogic;
+namespace SLoggerBusinessLogic.Tools;
 
 public class AgentToolClass
 {
