@@ -16,7 +16,7 @@ public class UnitTestTools
     [TestCase(12, new byte[]{49,50})]
     public void TestConvertObjToByteArray(object obj, byte[] testResultData)
     {
-        var data = Tools.ConvertAnObjectToAByteArray(obj);
+        var data = SLoggerTools.ConvertAnObjectToAByteArray(obj);
         Assert.AreEqual(testResultData, data);
     }
 
@@ -27,8 +27,8 @@ public class UnitTestTools
     [Test]
     public void TestConvertByteArrayToObj()
     {
-        var dataOne = Tools.ConvertByteArrayToObject(new byte[]{49,50});
-        var dataTwo = Tools.ConvertByteArrayToObject(new byte[]{34,84,101,115,116,34});
+        var dataOne = SLoggerTools.ConvertByteArrayToObject(new byte[]{49,50});
+        var dataTwo = SLoggerTools.ConvertByteArrayToObject(new byte[]{34,84,101,115,116,34});
         if (int.Parse(dataOne.ToString()!)  != 12)
         {
             Assert.Fail("Conversation from byte array to int failed");

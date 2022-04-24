@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace SLoggerBusinessLogic;
 
-public class Tools
+public class SLoggerTools
 {
     /// <summary>
     /// This method is used to convert an object

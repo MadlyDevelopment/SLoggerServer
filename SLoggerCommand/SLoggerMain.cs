@@ -1,6 +1,6 @@
 using NLog;
 using NLog.Web;
-using SLoggerBusinessLogic;
+using SLoggerBusinessLogic.Tools;
 
 namespace SLogger_Command;
 
@@ -14,7 +14,7 @@ public static class SLoggerMain
         _logger.Info("Starting up the SLogger server");
         StartUpSocketServer();
     }
-
+    
     private static void StartUpSocketServer()
     {
         AsynchronousSocketListener.StartListening();
