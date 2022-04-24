@@ -37,7 +37,7 @@ public class AsynchronousSocketListener
         }
         catch (Exception e)
         {
-            _logger.Error($"The Server could not start lisiting on port {_port}", e);
+            _logger.Error(e,$"The Server could not start lisiting on port {_port}");
         }
     }
     public static void AcceptCallback(IAsyncResult ar)
@@ -102,7 +102,7 @@ public class AsynchronousSocketListener
         }
         catch (Exception e)
         {
-            _logger.Error("The message could not be send to the agent", e);  
+            _logger.Error(e,"The message could not be send to the agent");  
         }  
     }
     
