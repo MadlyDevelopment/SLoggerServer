@@ -1,7 +1,7 @@
 using System.Net.Sockets;
 using System.Text;
 
-namespace SLoggerBusinessLogic;
+namespace SLoggerBusinessLogic.NetworkTools;
 
 public class StateObject
 {

@@ -4,7 +4,7 @@ using System.Text;
 using NLog;
 using NLog.Web;
 
-namespace SLoggerBusinessLogic.Tools;
+namespace SLoggerBusinessLogic.NetworkTools;
 
 public class AsynchronousSocketListener
 {

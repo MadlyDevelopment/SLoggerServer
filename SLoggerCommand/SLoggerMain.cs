@@ -1,6 +1,6 @@
 using NLog;
 using NLog.Web;
-using SLoggerBusinessLogic.Tools;
+using SLoggerBusinessLogic.NetworkTools;
 
 namespace SLogger_Command;
 
